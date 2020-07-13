@@ -55,7 +55,7 @@ def updateBot(channel = "none"):
 
 @client.event
 async def on_ready():
-    print(f'{client.user} has connected to Discord!')
+    print(f'{client.user} has connected to Discord! Iam on {len(client.guilds)} guilds!')
 
 @client.event
 async def on_message(message):
@@ -63,7 +63,7 @@ async def on_message(message):
 		return
 	if(len(message.content) != 0):
 		if(message.content[0] == "?"):
-			print("Bot command registerd")
+			print("Bot command registered")
 			processed = message.content[1:]
 			if("random" in processed):
 				req = requests.get('https://crazyapi.tk/api-v1/RandomFact.php')
@@ -79,7 +79,7 @@ async def on_message(message):
 				await message.channel.send("This is my help page! You can do ?random to get a useless fact.")
 			if("stats" in processed):
 				f = open("stats.txt", "r")
-				await message.channel.send(f'I have served **{f.readlines()[0]}** useless facts.')
+				await message.channel.send(f'I have served **{f.readlines()[0]}** useless facts. And Iam on **{len(client.guilds)}** guilds.')
 				f.close()
 			if("stop" in processed):
 				print(message.author)
