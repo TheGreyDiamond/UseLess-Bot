@@ -1,7 +1,6 @@
 import os,sys
 import requests
 import discord
-from dotenv import load_dotenv
 print(sys.version)
 f = open(".env","r")
 TOKEN = f.readlines()[0]
