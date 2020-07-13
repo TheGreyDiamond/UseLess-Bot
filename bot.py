@@ -7,6 +7,8 @@ f = open(".env","r")
 TOKEN = f.readlines()[0]
 f.close()
 
+botCommander = ["TheGreydiamond#6512"]
+
 client = discord.Client()
 
 @client.event
@@ -37,4 +39,11 @@ async def on_message(message):
 				f = open("stats.txt", "r")
 				await message.channel.send(f'I have served **{f.readlines()[0]}** useless facts.')
 				f.close()
+			if("stop" in processed):
+				print(message.author)
+				if(str(message.author) in botCommander):
+					await message.channel.send(f'I will quit now. Goodbye :wave:')
+					exit()
+				else:
+					await message.channel.send("You're not allowed to do that. :warning:")
 client.run(TOKEN)
