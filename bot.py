@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, json
 import requests
 import discord
 print(sys.version)
@@ -9,6 +9,23 @@ f.close()
 botCommander = ["TheGreydiamond#6512"]
 
 client = discord.Client()
+
+def updateBot():
+	loFi = open("version.json", "r")
+	processString = ""
+	for elm in loFi.readlines():
+		processString += elm
+	jsonPro = json.loads(processString)
+	localVersion = jsonPro["version"]
+	## Now query the remote version
+	req = requests.get("https://raw.githubusercontent.com/TheGreyDiamond/UseLess-Bot/master/version.json")
+	reFi = req.text
+	jsonremo = json.loads(reFi)
+	remoteVersion = jsonremo["version"]
+	print("--Version--")
+	print(f'Local version is {localVersion}')
+	print(f'Remote version is {remoteVersion}')
+
 
 @client.event
 async def on_ready():
@@ -45,4 +62,5 @@ async def on_message(message):
 					exit()
 				else:
 					await message.channel.send("You're not allowed to do that. :warning:")
-client.run(TOKEN)
+#client.run(TOKEN)
+updateBot()
