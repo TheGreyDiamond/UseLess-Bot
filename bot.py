@@ -10,7 +10,9 @@ botCommander = ["TheGreydiamond#6512"]
 
 client = discord.Client()
 
-def updateBot():
+def updateBot(channel = "none"):
+	if(channel != "none"):
+		channel.send("Starting update")
 	loFi = open("version.json", "r")
 	processString = ""
 	for elm in loFi.readlines():
@@ -22,9 +24,33 @@ def updateBot():
 	reFi = req.text
 	jsonremo = json.loads(reFi)
 	remoteVersion = jsonremo["version"]
+	## Now check if there is a new version
+	localVersionPart = localVersion.split(".")
+	remoteVersionPart = remoteVersion.split(".")
+
+	## Check if there is a Major update
+	updateAvaiable = False
+	if(int(remoteVersionPart[0]) > int(localVersionPart[0])):
+		updateAvaiable = True
+	## Check for minor update
+	if(int(remoteVersionPart[1]) > int(localVersionPart[1])):
+		updateAvaiable = True
+	## Check for BUgfix update
+	if(int(remoteVersionPart[2]) > int(localVersionPart[2])):
+		updateAvaiable = True
+	
 	print("--Version--")
 	print(f'Local version is {localVersion}')
 	print(f'Remote version is {remoteVersion}')
+	if(updateAvaiable):
+		print("There is a newer version avaiable")
+		if(channel != "none"):
+			channel.send("There is a newer version avaiable.")
+	else:
+		print("There is no newer version avaiable")
+		if(channel != "none"):
+			channel.send("There is a no newer version avaiable.")
+
 
 
 @client.event
