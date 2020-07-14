@@ -6,12 +6,13 @@ pythonPath = settings.pythonPath
 def copytree(src, dst, symlinks=False, ignore=None):
 	for item in os.listdir(src):
 		try:
-			s = os.path.join(src, item)
-			d = os.path.join(dst, item)
-			if os.path.isdir(s):
-				shutil.copytree(s, d, symlinks, ignore)
-			else:
-				shutil.copy2(s, d)
+			if("stats.txt" not in item):
+				s = os.path.join(src, item)
+				d = os.path.join(dst, item)
+				if os.path.isdir(s):
+					shutil.copytree(s, d, symlinks, ignore)
+				else:
+					shutil.copy2(s, d)
 		except:
 			pass
 
@@ -45,5 +46,7 @@ try:
 except Exception as e:
 	print("Unable to remove old update folder.")
 	print("Error was: " + str(e))
+	print("Trying linux way")
+	os.system("rm update -R -f")
 print("Everything is done!! Restarting bot.")
 os.system(pythonPath + " bot.py")
