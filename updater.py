@@ -5,6 +5,7 @@ pythonPath = settings.pythonPath
 
 def copytree(src, dst, symlinks=False, ignore=None):
 	for item in os.listdir(src):
+		print(item)
 		try:
 			s = os.path.join(src, item)
 			d = os.path.join(dst, item)
