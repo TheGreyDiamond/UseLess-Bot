@@ -11,9 +11,13 @@ botCommander = ["TheGreydiamond#6512"]
 
 client = discord.Client()
 
-def updateBot(channel = "none"):
+def logToDC(message, channel = "none"):
+	print(message)
 	if(channel != "none"):
-		channel.send("Starting update")
+		channel.send(message)
+
+def updateBot(channel = "none"):
+	logToDC("Starting update", channel=channel)
 	loFi = open("version.json", "r")
 	processString = ""
 	for elm in loFi.readlines():
@@ -44,14 +48,12 @@ def updateBot(channel = "none"):
 	print(f'Local version is {localVersion}')
 	print(f'Remote version is {remoteVersion}')
 	if(updateAvaiable):
-		print("There is a newer version avaiable")
-		if(channel != "none"):
-			channel.send("There is a newer version avaiable.")
+		logToDC("There is a newer version avaiable. Downloading update..", channel=channel)
+
 		git.Git("update/").clone("https://github.com/TheGreyDiamond/UseLess-Bot.git")
+		logToDC("Download done.", channel=channel)
 	else:
-		print("There is no newer version avaiable")
-		if(channel != "none"):
-			channel.send("There is a no newer version avaiable.")
+		logToDC("There is no newer version avaiable", channel=channel)
 
 
 
