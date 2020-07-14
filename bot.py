@@ -116,7 +116,7 @@ async def on_message(message):
 				await message.channel.send("This is my help page! You can do ?random to get a useless fact. You can use ?stats to get some stats!x")
 			if("stats" in processed):
 				f = open("stats.txt", "r")
-				await message.channel.send(f'I have served **{f.readlines()[0]}** useless facts. And Iam on **{len(client.guilds)}** guilds.')
+				await message.channel.send(f'I have served **{f.readlines()[0]}** useless facts. And I\'am on **{len(client.guilds)}** guilds.')
 				f.close()
 			if("stop" in processed):
 				print(message.author)
