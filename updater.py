@@ -1,5 +1,7 @@
 from time import sleep
-import os, shutil
+import os, shutil, settings
+
+pythonPath = settings.pythonPath
 
 def copytree(src, dst, symlinks=False, ignore=None):
 	for item in os.listdir(src):
@@ -35,3 +37,7 @@ for dele in listOf:
 	print("[Done]")
 print("Starting file moving..", end = "")
 copytree("./update/UseLess-Bot/", "./")
+print("Done! Cleaning up")
+shutil.rmtree("update")
+print("Everything is done!! Restarting bot.")
+os.system(pythonPath + " bot.py")
