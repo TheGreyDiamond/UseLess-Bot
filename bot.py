@@ -29,7 +29,7 @@ def copytree(src, dst, symlinks=False, ignore=None): ## Taken from https://stack
 
 def updateBot(channel = "none"):
 	try:
-		logToDC("Starting update", channel=channel)
+		await logToDC("Starting update", channel=channel)
 		loFi = open("version.json", "r")
 		processString = ""
 		for elm in loFi.readlines():
@@ -61,11 +61,11 @@ def updateBot(channel = "none"):
 		print(f'Local version is {localVersion}')
 		print(f'Remote version is {remoteVersion}')
 		if(updateAvaiable):
-			logToDC("There is a newer version avaiable. Downloading update..", channel=channel)
+			await logToDC("There is a newer version avaiable. Downloading update..", channel=channel)
 			if(not os.path.isdir("update")):
 				os.makedirs("update")
 			git.Git("update/").clone("https://github.com/TheGreyDiamond/UseLess-Bot.git")
-			logToDC("Download done. Backuping...", channel=channel)
+			await logToDC("Download done. Backuping...", channel=channel)
 			myPath = "keepFiles"
 			if(not os.path.isdir(myPath)):
 				os.makedirs(myPath)
@@ -75,16 +75,16 @@ def updateBot(channel = "none"):
 			copytree(".","backup")
 			shutil.copyfile("settings.py","keepFiles/settings.py")
 			shutil.copyfile("stats.txt","keepFiles/stats.txt")
-			logToDC("Starting update script. I will be back in a sec. :wave: ", channel=channel)
+			await logToDC("Starting update script. I will be back in a sec. :wave: ", channel=channel)
 			os.system(pythonPath + " updater.py")
 			try:
 				exit(1)
 			except:
 				pass
 		else:
-			logToDC("There is no newer version avaiable", channel=channel)
+			await logToDC("There is no newer version avaiable", channel=channel)
 	except Exception as e:
-		logToDC("Something failed. Check console. Aborting", channel=channel)
+		await logToDC("Something failed. Check console. Aborting", channel=channel)
 		print(e)
 
 
