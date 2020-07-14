@@ -2,16 +2,16 @@ from time import sleep
 import os, shutil
 
 def copytree(src, dst, symlinks=False, ignore=None):
-    for item in os.listdir(src):
-    	try:
-	        s = os.path.join(src, item)
-	        d = os.path.join(dst, item)
-	        if os.path.isdir(s):
-	            shutil.copytree(s, d, symlinks, ignore)
-	        else:
-	            shutil.copy2(s, d)
-	    except:
-	    	pass
+	for item in os.listdir(src):
+		try:
+			s = os.path.join(src, item)
+			d = os.path.join(dst, item)
+			if os.path.isdir(s):
+				shutil.copytree(s, d, symlinks, ignore)
+			else:
+				shutil.copy2(s, d)
+		except:
+			pass
 
 print("Starting updater.")
 print("Wating 10 seconds for the main bot to quit.")
