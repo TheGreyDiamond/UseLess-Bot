@@ -47,6 +47,7 @@ def updateBot(channel = "none"):
 		print("There is a newer version avaiable")
 		if(channel != "none"):
 			channel.send("There is a newer version avaiable.")
+		git.Git("update/").clone("https://github.com/TheGreyDiamond/UseLess-Bot.git")
 	else:
 		print("There is no newer version avaiable")
 		if(channel != "none"):
