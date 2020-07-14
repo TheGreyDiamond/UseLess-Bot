@@ -37,7 +37,9 @@ for dele in listOf:
 	print("[Done]")
 print("Starting file moving..", end = "")
 copytree("./update/UseLess-Bot/", "./")
-print("Done! Cleaning up")
+print("Done! Letting everything settel for a minute")
+sleep(4)
+print("Cleaning up")
 try:
 	shutil.rmtree("./update/")
 except Exception as e:
