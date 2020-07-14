@@ -121,5 +121,11 @@ async def on_message(message):
 					exit()
 				else:
 					await message.channel.send("You're not allowed to do that. :warning:")
-#client.run(TOKEN)
-updateBot()
+			if("update" in processed):
+				print(message.author)
+				if(str(message.author) in botCommander):
+					updateBot()
+				else:
+					await message.channel.send("You're not allowed to do that. :warning:")
+client.run(TOKEN)
+#updateBot()
