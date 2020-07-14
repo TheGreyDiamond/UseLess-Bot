@@ -3,7 +3,7 @@ import requests, shutil
 import discord
 import settings 
 
-pythonPath = "C:\\Python\\python.exe" ## Set this to python3 if you dont knwo
+pythonPath = settings.pythonPath ## Set this to python3 if you dont knwo
 
 print(sys.version)
 
@@ -13,10 +13,10 @@ botCommander = ["TheGreydiamond#6512"]
 
 client = discord.Client()
 
-def logToDC(message, channel = "none"):
+async def logToDC(message, channel = "none"):
 	print(message)
 	if(channel != "none"):
-		channel.send(message)
+		await channel.send(message)
 
 def copytree(src, dst, symlinks=False, ignore=None): ## Taken from https://stackoverflow.com/questions/1868714/how-do-i-copy-an-entire-directory-of-files-into-an-existing-directory-using-pyth
     for item in os.listdir(src):
@@ -77,7 +77,10 @@ def updateBot(channel = "none"):
 			shutil.copyfile("stats.txt","keepFiles/stats.txt")
 			logToDC("Starting update script. I will be back in a sec. :wave: ", channel=channel)
 			os.system(pythonPath + " updater.py")
-			exit()
+			try:
+				exit(1)
+			except:
+				pass
 		else:
 			logToDC("There is no newer version avaiable", channel=channel)
 	except Exception as e:
