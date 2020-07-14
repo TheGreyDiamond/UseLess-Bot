@@ -3,7 +3,7 @@ import requests, shutil
 import discord
 import settings 
 
-pythonPath = settings.pythonPath
+pythonPath = "C:\\Python\\python.exe" ## Set this to python3 if you dont knwo
 
 print(sys.version)
 
@@ -62,9 +62,7 @@ def updateBot(channel = "none"):
 		print(f'Remote version is {remoteVersion}')
 		if(updateAvaiable):
 			logToDC("There is a newer version avaiable. Downloading update..", channel=channel)
-			if(not os.path.isdir("update")):
-				os.makedirs("update")
-			myPath = "backup"
+
 			git.Git("update/").clone("https://github.com/TheGreyDiamond/UseLess-Bot.git")
 			logToDC("Download done. Backuping...", channel=channel)
 			myPath = "keepFiles"

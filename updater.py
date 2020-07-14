@@ -38,6 +38,9 @@ for dele in listOf:
 print("Starting file moving..", end = "")
 copytree("./update/UseLess-Bot/", "./")
 print("Done! Cleaning up")
-shutil.rmtree("update")
+try:
+	shutil.rmtree("update")
+except:
+	print("Unable to remove old update folder.")
 print("Everything is done!! Restarting bot.")
 os.system(pythonPath + " bot.py")
