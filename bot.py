@@ -16,7 +16,7 @@ client = discord.Client()
 async def logToDC(message, channel = "none"):
 	print(message)
 	if(channel != "none"):
-		await channel.send(message)
+		channel.send(message)
 
 def copytree(src, dst, symlinks=False, ignore=None): ## Taken from https://stackoverflow.com/questions/1868714/how-do-i-copy-an-entire-directory-of-files-into-an-existing-directory-using-pyth
     for item in os.listdir(src):
@@ -29,7 +29,7 @@ def copytree(src, dst, symlinks=False, ignore=None): ## Taken from https://stack
 
 def updateBot(channel = "none"):
 	try:
-		await logToDC("Starting update", channel=channel)
+		logToDC("Starting update", channel=channel)
 		loFi = open("version.json", "r")
 		processString = ""
 		for elm in loFi.readlines():
@@ -61,11 +61,11 @@ def updateBot(channel = "none"):
 		print(f'Local version is {localVersion}')
 		print(f'Remote version is {remoteVersion}')
 		if(updateAvaiable):
-			await logToDC("There is a newer version avaiable. Downloading update..", channel=channel)
+			logToDC("There is a newer version avaiable. Downloading update..", channel=channel)
 			if(not os.path.isdir("update")):
 				os.makedirs("update")
 			git.Git("update/").clone("https://github.com/TheGreyDiamond/UseLess-Bot.git")
-			await logToDC("Download done. Backuping...", channel=channel)
+			logToDC("Download done. Backuping...", channel=channel)
 			myPath = "keepFiles"
 			if(not os.path.isdir(myPath)):
 				os.makedirs(myPath)
@@ -76,16 +76,16 @@ def updateBot(channel = "none"):
 			copytree(".","backup")
 			shutil.copyfile("settings.py","keepFiles/settings.py")
 			shutil.copyfile("stats.txt","keepFiles/stats.txt")
-			await logToDC("Starting update script. I will be back in a sec. :wave: ", channel=channel)
+			logToDC("Starting update script. I will be back in a sec. :wave: ", channel=channel)
 			os.system(pythonPath + " updater.py")
 			try:
 				exit(1)
 			except:
 				pass
 		else:
-			await logToDC("There is no newer version avaiable", channel=channel)
+			logToDC("There is no newer version avaiable", channel=channel)
 	except Exception as e:
-		await logToDC("Something failed. Check console. Aborting", channel=channel)
+		logToDC("Something failed. Check console. Aborting", channel=channel)
 		print(e)
 
 
