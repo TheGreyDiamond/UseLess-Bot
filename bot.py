@@ -1,10 +1,11 @@
-import os, sys, json
+import os, sys, json, git
 import requests
 import discord
+import settings 
+
 print(sys.version)
-f = open(".env","r")
-TOKEN = f.readlines()[0]
-f.close()
+
+TOKEN = settings.token
 
 botCommander = ["TheGreydiamond#6512"]
 
@@ -76,7 +77,7 @@ async def on_message(message):
 				print("!!!" + str(temp))
 				f.close()
 			if("help" in processed):
-				await message.channel.send("This is my help page! You can do ?random to get a useless fact.")
+				await message.channel.send("This is my help page! You can do ?random to get a useless fact. You can use ?stats to get some stats!x")
 			if("stats" in processed):
 				f = open("stats.txt", "r")
 				await message.channel.send(f'I have served **{f.readlines()[0]}** useless facts. And Iam on **{len(client.guilds)}** guilds.')
