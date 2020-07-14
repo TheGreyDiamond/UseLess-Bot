@@ -42,6 +42,6 @@ try:
 	shutil.rmtree("./update/")
 except Exception as e:
 	print("Unable to remove old update folder.")
-	print("Error was: " + str(e)
+	print("Error was: " + str(e))
 print("Everything is done!! Restarting bot.")
 os.system(pythonPath + " bot.py")
