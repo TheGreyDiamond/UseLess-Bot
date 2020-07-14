@@ -1,5 +1,5 @@
 import os, sys, json, git
-import requests
+import requests, shutil
 import discord
 import settings 
 
@@ -52,6 +52,13 @@ def updateBot(channel = "none"):
 
 		git.Git("update/").clone("https://github.com/TheGreyDiamond/UseLess-Bot.git")
 		logToDC("Download done.", channel=channel)
+		myPath = "keepFiles"
+		if(not os.path.isdir(myPath)):
+			os.makedirs(myPath)
+		myPath = "backup"
+		if(not os.path.isdir(myPath)):
+			os.makedirs(myPath)
+		shutil.copy(".", "backup")
 	else:
 		logToDC("There is no newer version avaiable", channel=channel)
 
