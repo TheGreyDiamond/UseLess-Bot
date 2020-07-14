@@ -69,6 +69,7 @@ def updateBot(channel = "none"):
 			myPath = "keepFiles"
 			if(not os.path.isdir(myPath)):
 				os.makedirs(myPath)
+			shutil.rmtree("backup")
 			myPath = "backup"
 			if(not os.path.isdir(myPath)):
 				os.makedirs(myPath)
