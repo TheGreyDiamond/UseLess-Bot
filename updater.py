@@ -5,7 +5,6 @@ pythonPath = settings.pythonPath
 
 def copytree(src, dst, symlinks=False, ignore=None):
 	for item in os.listdir(src):
-		print(item)
 		try:
 			s = os.path.join(src, item)
 			d = os.path.join(dst, item)
@@ -40,8 +39,9 @@ print("Starting file moving..", end = "")
 copytree("./update/UseLess-Bot/", "./")
 print("Done! Cleaning up")
 try:
-	shutil.rmtree("update")
-except:
+	shutil.rmtree("./update/")
+except Exception as e:
 	print("Unable to remove old update folder.")
+	print("Error was: " + str(e)
 print("Everything is done!! Restarting bot.")
 os.system(pythonPath + " bot.py")
