@@ -16,51 +16,67 @@ def logToDC(message, channel = "none"):
 	if(channel != "none"):
 		channel.send(message)
 
+def copytree(src, dst, symlinks=False, ignore=None): ## Taken from https://stackoverflow.com/questions/1868714/how-do-i-copy-an-entire-directory-of-files-into-an-existing-directory-using-pyth
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)
+
 def updateBot(channel = "none"):
-	logToDC("Starting update", channel=channel)
-	loFi = open("version.json", "r")
-	processString = ""
-	for elm in loFi.readlines():
-		processString += elm
-	jsonPro = json.loads(processString)
-	localVersion = jsonPro["version"]
-	## Now query the remote version
-	req = requests.get("https://raw.githubusercontent.com/TheGreyDiamond/UseLess-Bot/master/version.json")
-	reFi = req.text
-	jsonremo = json.loads(reFi)
-	remoteVersion = jsonremo["version"]
-	## Now check if there is a new version
-	localVersionPart = localVersion.split(".")
-	remoteVersionPart = remoteVersion.split(".")
+	try:
+		logToDC("Starting update", channel=channel)
+		loFi = open("version.json", "r")
+		processString = ""
+		for elm in loFi.readlines():
+			processString += elm
+		jsonPro = json.loads(processString)
+		localVersion = jsonPro["version"]
+		## Now query the remote version
+		req = requests.get("https://raw.githubusercontent.com/TheGreyDiamond/UseLess-Bot/master/version.json")
+		reFi = req.text
+		jsonremo = json.loads(reFi)
+		remoteVersion = jsonremo["version"]
+		## Now check if there is a new version
+		localVersionPart = localVersion.split(".")
+		remoteVersionPart = remoteVersion.split(".")
 
-	## Check if there is a Major update
-	updateAvaiable = False
-	if(int(remoteVersionPart[0]) > int(localVersionPart[0])):
-		updateAvaiable = True
-	## Check for minor update
-	if(int(remoteVersionPart[1]) > int(localVersionPart[1])):
-		updateAvaiable = True
-	## Check for BUgfix update
-	if(int(remoteVersionPart[2]) > int(localVersionPart[2])):
-		updateAvaiable = True
-	
-	print("--Version--")
-	print(f'Local version is {localVersion}')
-	print(f'Remote version is {remoteVersion}')
-	if(updateAvaiable):
-		logToDC("There is a newer version avaiable. Downloading update..", channel=channel)
+		## Check if there is a Major update
+		updateAvaiable = False
+		if(int(remoteVersionPart[0]) > int(localVersionPart[0])):
+			updateAvaiable = True
+		## Check for minor update
+		if(int(remoteVersionPart[1]) > int(localVersionPart[1])):
+			updateAvaiable = True
+		## Check for BUgfix update
+		if(int(remoteVersionPart[2]) > int(localVersionPart[2])):
+			updateAvaiable = True
+		
+		print("--Version--")
+		print(f'Local version is {localVersion}')
+		print(f'Remote version is {remoteVersion}')
+		if(updateAvaiable):
+			logToDC("There is a newer version avaiable. Downloading update..", channel=channel)
 
-		git.Git("update/").clone("https://github.com/TheGreyDiamond/UseLess-Bot.git")
-		logToDC("Download done.", channel=channel)
-		myPath = "keepFiles"
-		if(not os.path.isdir(myPath)):
-			os.makedirs(myPath)
-		myPath = "backup"
-		if(not os.path.isdir(myPath)):
-			os.makedirs(myPath)
-		shutil.copy(".", "backup")
-	else:
-		logToDC("There is no newer version avaiable", channel=channel)
+			git.Git("update/").clone("https://github.com/TheGreyDiamond/UseLess-Bot.git")
+			logToDC("Download done. Backuping...", channel=channel)
+			myPath = "keepFiles"
+			if(not os.path.isdir(myPath)):
+				os.makedirs(myPath)
+			myPath = "backup"
+			if(not os.path.isdir(myPath)):
+				os.makedirs(myPath)
+			copytree(".","backup")
+			shutil.copyfile("settings.py","keepFiles/settings.py")
+			shutil.copyfile("stats.txt","keepFiles/stats.txt")
+			logToDC("Starting update script. I will be back in a sec. :wave: ", channel=channel)
+		else:
+			logToDC("There is no newer version avaiable", channel=channel)
+	except Exception as e:
+		logToDC("Something failed. Check console. Aborting", channel=channel)
+		print(e)
 
 
 
